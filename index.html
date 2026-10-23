@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es" data-tema="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Registrador de horas extra</title>
+  <meta name="description" content="Apunta tus horas extra día a día y calcula su importe por nómina según tu convenio.">
+  <meta name="theme-color" content="#f2f4ee">
+  <meta name="color-scheme" content="light dark">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="iconos/icono.svg" type="image/svg+xml">
+  <link rel="icon" href="iconos/icono-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Horas Extra">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/config.js"></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header>
+    <div class="titulo">
+      <h1>Registrador de horas extra</h1>
+      <span id="version"></span>
+    </div>
+    <p class="subtitulo nota">Convenio del Metal · Provincia de A Coruña</p>
+  </header>
+  <main>
+    <noscript><p class="tarjeta">Esta app necesita JavaScript activado.</p></noscript>
+  </main>
+  <nav hidden>
+    <button data-pestana="registro"><span aria-hidden="true">⏱</span>Registro</button>
+    <button data-pestana="nominas"><span aria-hidden="true">📄</span>Nóminas</button>
+    <button data-pestana="ajustes"><span aria-hidden="true">⚙</span>Ajustes</button>
+  </nav>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>
