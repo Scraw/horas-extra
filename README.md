@@ -1,77 +1,76 @@
-# Registrador de horas extra
+# ⏱️ Registrador de horas extra
 
-App web instalable (PWA) para apuntar las horas extra de cada día y calcular su importe por nómina
-según el Convenio del Metal de la provincia de A Coruña 2026-2029. Funciona en Android e iPhone, sin conexión,
-y guarda los datos solo en el dispositivo.
+Apunta tus horas extra día a día y calcula cuánto cobrarás por ellas en cada nómina, según el **Convenio del Metal de la provincia de A Coruña 2026-2029**.
 
-> Los importes son orientativos y en bruto. Comprueba siempre lo que te corresponde en tu convenio colectivo.
+Funciona en el móvil (Android e iPhone) como una app más, **sin conexión** y sin crear cuentas. Tus datos se quedan solo en tu teléfono.
 
-## Publicarla gratis en GitHub Pages
+👉 **Abrir la app:** _(enlace pendiente de publicar)_
 
-1. Crea un repositorio en GitHub y sube el contenido de esta carpeta a la raíz de la rama `main`.
-2. En el repositorio: **Settings › Pages › Build and deployment › Source: Deploy from a branch**,
-   rama `main`, carpeta `/ (root)`, **Save**.
-3. Al cabo de un minuto la app estará en `https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/`.
-4. Ábrela en el móvil e instálala:
-   - Android (Chrome): menú ⋮ › Instalar aplicación.
-   - iPhone (Safari): Compartir › Añadir a pantalla de inicio.
+> ⚠️ Los importes son una **estimación orientativa en bruto**. Comprueba siempre lo que te corresponde en tu convenio colectivo y en tu nómina. Esta app es de uso personal, no vincula a la empresa y no sustituye el registro oficial de jornada.
 
-No hace falta compilar nada: son archivos estáticos. El archivo `.nojekyll` evita que GitHub los procese.
+---
 
-## Probarla en el ordenador
+## ✨ Qué puedes hacer
 
-Necesita servirse por HTTP (no vale abrir `index.html` con doble clic):
+- **Apuntar horas** en tramos de media hora, marcando los festivos. Los domingos cuentan siempre como festivo.
+- **Ver al momento** las horas y el importe de la nómina en curso, separados en laborables y festivos.
+- **Cerrar cada nómina** en su fecha de cierre y **descargar un PDF** con el desglose de cada día: horas, tarifa e importe.
+- **Descargar un resumen anual en PDF** con todas las horas del año y el total de cada nómina.
+- **Cambiar de categoría**, para todo el histórico o a partir de una fecha (por ejemplo, tras un ascenso).
+- **Guardar una copia de seguridad** en un archivo y recuperarla en otro móvil.
+- Elegir **modo claro u oscuro**.
 
-```
-npx serve .
-```
+## 🧮 Cómo calcula
 
-y abre `http://localhost:3000`. Las pruebas del cálculo: `node --test test/*.test.mjs` (Node 20 o posterior).
+- **Valor de la hora extra** = retribución total anual de tu categoría ÷ horas de jornada anual × **1,60** (laborable) o × **1,75** (domingo o festivo).
+- Cada día se calcula con la categoría que tenías ese día y con la tabla salarial y la jornada del año en que lo trabajaste.
+- **Subidas del convenio:** 5 % (2026), 3 % (2027), 3 % (2028) y 4 % (2029). Mientras no se publique en el BOP la tabla de un año nuevo, sus horas aparecen como **pendientes de revisión salarial** y se calculan con la subida pactada. La app indica el porcentaje y cuántos euros supone.
+- **Nóminas:** cada nómina va del día siguiente al cierre anterior hasta su propia fecha de cierre (por ejemplo, del 14 de septiembre al 13 de octubre).
 
-## Dónde tocar cada cosa
+## 📲 Cómo instalarla
 
-| Qué | Dónde |
+Abre el enlace de la app en el navegador del móvil y sigue los pasos de tu navegador. Una vez instalada, aparece en la pantalla de inicio como **Horas Extra**.
+
+### Android
+
+| Navegador | Pasos |
 |---|---|
-| Versión, enlace a incidencias (sugerencias) y al código | `js/config.js` |
-| Registro de cambios, manual, aviso legal y licencia mostrada | `js/textos.js` |
-| Tablas salariales, subidas, IPC real y jornada anual | `js/dominio.js` (`TABLAS_PUBLICADAS`, `INCREMENTOS`, `HORAS_ANUALES`) |
-| Fórmula y periodos de nómina | `js/dominio.js` |
-| PDF del desglose (nómina y anual) | `js/pdf.js` |
-| Colores y modo claro/oscuro | `css/estilos.css` |
-| Nombre bajo el icono | `manifest.webmanifest` (`short_name`) e `index.html` (`apple-mobile-web-app-title`) |
+| Chrome | Menú ⋮ › **Añadir a pantalla de inicio** › Instalar |
+| Samsung Internet | Menú ☰ › **Añadir página a** › Pantalla de inicio |
+| Firefox | Menú ⋮ › **Añadir a pantalla de inicio** (o **Instalar**) |
+| Edge | Menú … › **Añadir al teléfono** |
+| Brave | Menú ⋮ › **Añadir a pantalla de inicio** o **Instalar app** |
+| Opera | Menú ⋮ › **Añadir a…** › Pantalla de inicio |
+| DuckDuckGo | Menú ⋮ › **Añadir a pantalla de inicio** (crea un acceso directo que se abre dentro de DuckDuckGo) |
 
-### Publicar una versión nueva
+En Chrome y Samsung Internet también puedes instalarla desde **Ajustes › Instalar app**, dentro de la propia aplicación.
 
-1. Sube `VERSION` en `js/config.js`.
-2. Actualiza `CAMBIOS` en `js/textos.js`.
-3. Si creas archivos nuevos, añádelos a la lista `ARCHIVOS` de `sw.js`.
-4. Sube los cambios a GitHub. Al abrir la app, se actualiza sola y vuelve a mostrar el aviso con las novedades.
+### iPhone y iPad (iOS 16.4 o posterior)
 
-### Cuando se publique una tabla en el BOP o se conozca el IPC
+| Navegador | Pasos |
+|---|---|
+| Safari (recomendado) | Botón Compartir › **Añadir a pantalla de inicio** |
+| Chrome, Edge, Firefox | Botón Compartir › **Añadir a pantalla de inicio** |
+| Otros (Brave, DuckDuckGo…) | Si no aparece la opción, abre el enlace en Safari |
 
-- **Tabla publicada**: en `js/dominio.js`, añade a `TABLAS_PUBLICADAS` la entrada `'2027-CORUNA'` (o el año que sea)
-  con los mismos `id` de categoría. Las horas de ese año dejan de marcarse como pendientes de revisión.
-- **IPC real**: rellena `ipcReal` de ese año en `INCREMENTOS`. Si supera la subida pactada, ese año se recalcula
-  con el IPC (art. 39) y sirve de base para los siguientes.
-- **Lugo y Vigo**: quedan preparados en `LOCALIDADES`; para activarlos hace falta añadir sus tablas y la selección en Ajustes.
+> 💡 En iPhone, **instálala siempre en la pantalla de inicio**. Si la usas solo desde el navegador, iOS puede borrar sus datos tras unos días sin abrirla.
 
-## Reglas de cálculo
+Los nombres de los menús pueden variar un poco según la versión del navegador.
 
-- Solo se aplica el convenio de la provincia de A Coruña.
-- Valor hora extra = retribución total anual ÷ horas anuales × 1,60 (laborable) o × 1,75 (domingo o festivo marcado).
-- Horas anuales: 1752 (2026), 1744 (2027 y 2028), 1740 (2029). Cada día usa la tabla y la jornada del año en que se trabajó,
-  y la categoría que tenía el usuario ese día (la categoría puede cambiar para todo el histórico o desde una fecha).
-- Subidas pactadas (art. 38): 5 % (2026, ya incluida en la tabla 2026), 3 % (2027), 3 % (2028) y 4 % (2029), encadenadas.
-  Un año sin tabla publicada se estima con la subida pactada y se marca "pendiente de revisión salarial", mostrando la subida en % y en euros.
-- El día de cierre entra en la nómina que cierra; el siguiente periodo empieza al día siguiente.
-- Importes en bruto, sin redondear el valor hora; solo se redondea al mostrar.
+## 💾 Tus datos
 
-## Datos y privacidad
+- Todo se guarda **solo en tu móvil**, dentro del navegador con el que instalaste la app. No se envía nada a ningún servidor.
+- Si desinstalas la app, borras los datos del navegador o cambias de móvil o de navegador, **los datos se pierden**.
+- Haz copias de vez en cuando desde **Ajustes › Exportar copia** y guarda el archivo en un lugar seguro. Para recuperarlas, usa **Importar copia**.
 
-Todo se guarda en el almacenamiento local del navegador (`localStorage`). No hay servidor ni se envía nada.
-Desde **Ajustes › Copia de seguridad** se exporta e importa un archivo `.json` con todos los datos.
+## 💬 Ideas o errores
 
-## Licencia
+¿Has encontrado un error o tienes una idea? Cuéntanoslo en las [issues del repositorio](https://github.com/Scraw/horas-extra/issues).
 
-[MIT](LICENSE). Incluye [jsPDF](https://github.com/parallax/jsPDF) y
-[jsPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable), ambas MIT (ver `vendor/LICENCIAS-TERCEROS.txt`).
+## 📄 Licencia
+
+Software libre con [licencia MIT](LICENSE).
+
+---
+
+<sub>¿Quieres modificar la app o actualizar las tablas salariales? Consulta la [guía para desarrolladores](DESARROLLO.md).</sub>
