@@ -292,3 +292,17 @@ dialog h2 { font-size: 1.2rem; }
 .tramo .icono { font-size: 1.1rem; }
 .seccion-parche { font-weight: 700; color: var(--acento); margin: 8px 0 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.03em; }
 .licencia p { font-size: 0.85rem; }
+
+/* Textos largos: más aire entre párrafos (aviso legal, manual) */
+.dlg-cuerpo p, details p { margin: 0 0 12px; }
+.dlg-cuerpo li { margin-bottom: 6px; }
+.nota-manual { padding: 10px 12px; border-radius: 10px; background: var(--superficie-2); }
+
+/* Lista de categorías */
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { font-weight: 600; font-size: 0.9rem; padding: 0; margin-bottom: 6px; }
+.categorias { display: grid; gap: 8px; }
+.categorias label { display: flex; gap: 10px; font-weight: 400; font-size: 0.95rem; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--borde); border-radius: 12px; line-height: 1.35; cursor: pointer; }
+.categorias b { font-weight: 700; }
+.categorias input { margin-top: 3px; flex: none; width: 18px; height: 18px; accent-color: var(--primario); }
+.categorias label:has(input:checked) { border-color: var(--enlace); background: var(--superficie-2); }

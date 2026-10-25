@@ -1,6 +1,6 @@
 import * as D from './dominio.js';
 import * as A from './almacen.js';
-import { TITULO_AVISO, AVISO, MANUAL, CAMBIOS, LICENCIA } from './textos.js';
+import { TITULO_AVISO, AVISO, NOTA_MANUAL, MANUAL, CAMBIOS, LICENCIA } from './textos.js';
 import { fmtEuros, fmtTarifa, fmtHoras, fmtLarga, fmtCorta, fmtNum, tituloPeriodo, rangoPeriodo } from './formato.js';
 
 const { NOMBRE, VERSION, URL_SUGERENCIAS, URL_CODIGO } = self.CONFIG;
@@ -64,7 +64,9 @@ function dialogo({ titulo, html, botones, cerrable = true }) {
     dlg.addEventListener('close', () => dlg.remove());
     document.body.append(dlg);
     dlg.showModal();
-    $('.boton.principal', dlg)?.focus();
+    // Enfoca el botón sin desplazar: en el móvil el texto debe verse desde el principio.
+    $('.boton.principal', dlg)?.focus({ preventScroll: true });
+    dlg.scrollTop = 0;
   });
 }
 
@@ -76,7 +78,7 @@ function htmlParche([, , secciones]) {
 async function mostrarAvisoLegal() {
   const anterior = A.versionAvisoAnterior();
   const novedades = anterior && anterior !== VERSION ? CAMBIOS.find(([v]) => v === VERSION) : null;
-  let html = AVISO.map((p) => `<p>${p}</p>`).join('');
+  let html = AVISO.map((p) => `<p>${p}</p>`).join('') + `<p class="nota-manual">${NOTA_MANUAL}</p>`;
   if (novedades) {
     html = `<p class="etiqueta">Versión ${esc(VERSION)}</p>${htmlParche(novedades)}<hr><h3>${esc(TITULO_AVISO)}</h3>` + html;
   }
@@ -251,9 +253,11 @@ async function instalar() {
 
 // ---------- Vistas ----------
 
-function opcionesCategoria(sel) {
-  return D.categorias()
-    .map((c) => `<option value="${c.id}"${c.id === sel ? ' selected' : ''}>Grupo ${esc(c.grupo)}: ${esc(c.descripcion)}</option>`).join('');
+/** Lista de categorías para elegir: «Grupo N:» en negrita y la descripción debajo. */
+function listaCategorias(nombre, sel) {
+  return `<div class="categorias" role="radiogroup" aria-label="Categoría profesional">${D.categorias().map((c) => `
+    <label><input type="radio" name="${nombre}" value="${c.id}"${c.id === sel ? ' checked' : ''} required>
+      <span><b>Grupo ${esc(c.grupo)}:</b> ${esc(c.descripcion)}</span></label>`).join('')}</div>`;
 }
 
 /** Aviso de año pendiente de revisión salarial para un día concreto. */
@@ -274,7 +278,7 @@ function vistaBienvenida() {
     <p>Elige tu categoría profesional. Los cálculos usan las tablas del Convenio del Metal de la <b>provincia de ${esc(D.NOMBRE_PROVINCIA)}</b>.</p>
     <p class="nota">Podrás cambiar la categoría en Ajustes sin perder las horas registradas.</p>
     <form id="form-inicio" class="campos">
-      <label>Categoría profesional<select name="categoria" required><option value="" disabled selected>Elige…</option>${opcionesCategoria()}</select></label>
+      <fieldset><legend>Categoría profesional</legend>${listaCategorias('categoria')}</fieldset>
       <button class="boton principal ancho" type="submit">Empezar</button>
     </form>
   </section>`;
@@ -427,7 +431,7 @@ function vistaAjustes() {
     <h2>Mis datos</h2>
     <div class="campos">
       <p class="nota">Convenio del Metal de la <b>provincia de ${esc(D.NOMBRE_PROVINCIA)}</b>.</p>
-      <label>Categoría profesional<select id="aj-categoria">${opcionesCategoria(actual)}</select></label>
+      <fieldset><legend>Categoría profesional</legend>${listaCategorias('aj-categoria', actual)}</fieldset>
       ${tramos}
     </div>
   </section>
@@ -521,7 +525,7 @@ document.addEventListener('change', (e) => {
   if (t.closest('dialog')) return;
   if (t.id === 'fecha' && t.value) { ui.fecha = t.value; render(); }
   else if (t.id === 'festivo') { const r = datos.dias[ui.fecha] ?? { medias: 0 }; cambiarDia(ui.fecha, r.medias, t.checked); }
-  else if (t.id === 'aj-categoria') cambiarCategoria(t.value);
+  else if (t.name === 'aj-categoria') cambiarCategoria(t.value);
   else if (t.name === 'tema') { datos.tema = t.value; persistir(); aplicarTema(); }
   else if (t.id === 'archivo-copia' && t.files[0]) { importarCopia(t.files[0]); t.value = ''; }
 });

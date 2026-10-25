@@ -3,13 +3,16 @@
 export const TITULO_AVISO = 'Aviso Legal y Exención de Responsabilidad';
 
 export const AVISO = [
-  '<b>Uso Personal y Vinculación Laboral:</b> Esta aplicación es una herramienta de uso estrictamente personal y <b>no vincula a la empresa de ninguna manera</b>, ni sustituye los canales oficiales de comunicación o reclamación. Los datos e informes generados por esta app carecen de validez legal frente a la empresa. Asimismo, se recuerda al operario que <b>sigue estando obligado a registrar su jornada laboral obligatoriamente conforme a las instrucciones, procedimientos y dispositivos oficiales</b> que la empresa determine para el control horario. El uso de esta herramienta privada no exime en ningún caso del cumplimiento de dicha obligación laboral.',
-  '<b>Cálculos orientativos:</b> Los importes mostrados son una <b>estimación orientativa en bruto</b>, antes de impuestos (IRPF) y cotizaciones a la Seguridad Social. Los cálculos se basan en las tablas del convenio colectivo integradas en la app, las cuales pueden contener errores, omisiones o no estar completamente actualizadas. Tampoco se recogen particularidades o acuerdos personales.',
-  '<b>Verificación obligatoria:</b> Comprueba siempre los importes que te corresponden en tu convenio colectivo oficial y en tu nómina. En caso de discrepancia, prevalecerá siempre lo dispuesto en el convenio legal y la normativa vigente.',
-  '<b>Exclusión de responsabilidad:</b> El desarrollador <b>no se hace responsable</b> en ningún caso de reclamaciones, pérdidas, perjuicios económicos o discrepancias legales derivadas del uso de esta aplicación o de errores en sus cálculos. El usuario asume todo el riesgo derivado de su utilización.',
-  '<b>Sin asesoramiento profesional:</b> Esta aplicación <b>no constituye asesoramiento jurídico, laboral ni fiscal</b>. Ante cualquier duda sobre tus retribuciones o tus derechos, consulta con la representación legal de los trabajadores, tu sindicato o un profesional (graduado social o abogado laboralista).',
-  '<b>Privacidad y datos:</b> Tus datos se guardan exclusivamente de forma local en este dispositivo y no se envían a ningún servidor externo. Es tu responsabilidad realizar copias de seguridad periódicas desde el menú de Ajustes para evitar la pérdida de información.',
+  '<b>Uso personal:</b> Esta app es una herramienta personal que <b>no vincula a la empresa</b>, no sustituye los canales oficiales de comunicación o reclamación, y sus datos e informes <b>no tienen validez legal</b> frente a ella. Usarla no exime en ningún caso de la <b>obligación de registrar la jornada</b> con los procedimientos y dispositivos oficiales que determine la empresa.',
+  '<b>Cálculos orientativos:</b> Los importes son una <b>estimación en bruto</b>, antes de IRPF y cotizaciones a la Seguridad Social. Se basan en las tablas del convenio integradas en la app, que pueden contener errores u omisiones o no estar actualizadas, y no recogen particularidades ni acuerdos personales.',
+  '<b>Verificación obligatoria:</b> Comprueba siempre tus importes en el convenio colectivo oficial y en tu nómina. En caso de discrepancia, prevalecen el convenio y la normativa vigente.',
+  '<b>Exención de responsabilidad:</b> El desarrollador <b>no se hace responsable</b> en ningún caso de reclamaciones, pérdidas, perjuicios económicos o discrepancias legales derivadas del uso de la app o de errores en sus cálculos. El usuario asume todo el riesgo de su uso.',
+  '<b>Sin asesoramiento profesional:</b> Esta app <b>no es asesoramiento jurídico, laboral ni fiscal</b>. Ante cualquier duda, consulta con la representación de los trabajadores, tu sindicato o un profesional.',
+  '<b>Privacidad y datos:</b> Tus datos se guardan <b>solo en este dispositivo</b> y no se envían a ningún servidor. Haz copias de seguridad periódicas desde Ajustes para no perderlos.',
 ];
+
+// Se muestra al final del aviso al abrir la app.
+export const NOTA_MANUAL = '📖 Encontrarás el manual de uso en <b>Ajustes › Manual de uso</b>.';
 
 // Resumen del aviso para el pie de los PDF (texto plano).
 export const AVISO_PDF =
@@ -71,6 +74,13 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.1', '2026-10-25', [
+    ['Cambios', [
+      'Ajuste de textos: aviso legal más breve y con más espacio entre párrafos.',
+      'El aviso se abre desde el principio e indica dónde está el manual de uso.',
+      'Lista de categorías más legible, con el grupo en negrita.',
+    ]],
+  ]],
   ['0.3.0', '2026-10-23', [
     ['Novedades', [
       'Subidas salariales del convenio 2026-2029 (5 %, 3 %, 3 % y 4 %). Las horas de un año sin tabla publicada en el BOP se marcan como pendientes de revisión salarial, con la subida estimada en porcentaje y en euros.',
