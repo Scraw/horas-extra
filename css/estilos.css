@@ -306,3 +306,4 @@ legend { font-weight: 600; font-size: 0.9rem; padding: 0; margin-bottom: 6px; }
 .categorias b { font-weight: 700; }
 .categorias input { margin-top: 3px; flex: none; width: 18px; height: 18px; accent-color: var(--primario); }
 .categorias label:has(input:checked) { border-color: var(--enlace); background: var(--superficie-2); }
+.dlg-cuerpo h3:first-child { margin-top: 0; }

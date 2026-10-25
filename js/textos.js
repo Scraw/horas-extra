@@ -55,6 +55,7 @@ export const MANUAL = [
     'En iPhone, instala la app en la pantalla de inicio. Si la usas solo desde el navegador sin instalarla, iOS puede borrar sus datos tras unos días sin abrirla.',
   ]],
   ['Instalar la app', [
+    'Registrador de horas extra es una app de tipo <b>PWA</b>.',
     'Si tu navegador lo permite, en <b>Ajustes</b> aparece el botón <b>Instalar app</b>. Si no, según el navegador:',
     '<b>Android</b><br>' +
       '· Chrome: menú ⋮ › <b>Añadir a pantalla de inicio</b> › Instalar.<br>' +
@@ -74,6 +75,13 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.2', '2026-10-25', [
+    ['Cambios', [
+      'En DuckDuckGo, la copia de seguridad y los PDF se guardan desde el menú Compartir para que conserven su nombre.',
+      'El aviso inicial muestra el nombre de la app.',
+      'El manual indica que es una app de tipo PWA.',
+    ]],
+  ]],
   ['0.3.1', '2026-10-25', [
     ['Cambios', [
       'Ajuste de textos: aviso legal más breve y con más espacio entre párrafos.',
