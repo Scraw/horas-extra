@@ -4,7 +4,7 @@ Apunta tus horas extra día a día y calcula cuánto cobrarás por ellas en cada
 
 Funciona en el móvil (Android e iPhone) como una app más, **sin conexión** y sin crear cuentas. Tus datos se quedan solo en tu teléfono.
 
-👉 **Abrir la app:** _(enlace pendiente de publicar)_
+👉 **Abrir la app:** https://scraw.github.io/horas-extra/
 
 > ⚠️ Los importes son una **estimación orientativa en bruto**. Comprueba siempre lo que te corresponde en tu convenio colectivo y en tu nómina. Esta app es de uso personal, no vincula a la empresa y no sustituye el registro oficial de jornada.
 
