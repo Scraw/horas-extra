@@ -3,8 +3,7 @@ importScripts('js/config.js');
 
 const CACHE = 'rhe-' + self.CONFIG.VERSION;
 const ARCHIVOS = [
-  './',
-  'index.html',
+  './', // la página; no se precarga 'index.html' porque Cloudflare la redirige a './'
   'manifest.webmanifest',
   'css/estilos.css',
   'js/config.js',
@@ -42,6 +41,6 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) return;
   e.respondWith(
-    caches.match(e.request, { ignoreSearch: true }).then((r) => r ?? fetch(e.request).catch(() => caches.match('index.html'))),
+    caches.match(e.request, { ignoreSearch: true }).then((r) => r ?? fetch(e.request).catch(() => caches.match('./'))),
   );
 });

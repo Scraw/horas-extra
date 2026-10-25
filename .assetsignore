@@ -1,0 +1,14 @@
+# Archivos del repositorio que no se publican en Cloudflare (misma sintaxis que .gitignore)
+.git
+.gitignore
+.assetsignore
+.nojekyll
+.wrangler
+node_modules
+test
+package.json
+package-lock.json
+wrangler.jsonc
+README.md
+DESARROLLO.md
+*.zip

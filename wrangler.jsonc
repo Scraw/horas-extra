@@ -1,0 +1,11 @@
+{
+  // Publicación en Cloudflare (Workers con recursos estáticos). La app no tiene build:
+  // se publican los archivos de la raíz, salvo los que lista .assetsignore.
+  "name": "horas-extra",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./"
+    // Sin "not_found_handling": es una sola página sin rutas propias, así que una
+    // dirección que no existe debe dar 404 y no devolver index.html.
+  }
+}
