@@ -77,7 +77,6 @@ export const MANUAL = [
 export const CAMBIOS = [
   ['0.3.2', '2026-10-25', [
     ['Cambios', [
-      'En DuckDuckGo, la copia de seguridad y los PDF se guardan desde el menú Compartir para que conserven su nombre.',
       'El aviso inicial muestra el nombre de la app.',
       'El manual indica que es una app de tipo PWA.',
     ]],

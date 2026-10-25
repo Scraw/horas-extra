@@ -12,8 +12,6 @@ let eventoInstalar = null;
 const $ = (sel, raiz = document) => raiz.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-// DuckDuckGo para Android ignora el nombre de las descargas (las guarda con un código aleatorio).
-const esDuckDuckGo = /DuckDuckGo\//.test(navigator.userAgent);
 const historial = () => datos.ajustes.categorias;
 const pct = (n) => String(Math.round(n * 100) / 100).replace('.', ',') + ' %';
 
@@ -99,9 +97,8 @@ async function mostrarAvisoLegal() {
 
 async function entregarArchivo(blob, nombre) {
   const archivo = new File([blob], nombre, { type: blob.type });
-  // En iPhone y en DuckDuckGo se usa el menú Compartir: en iPhone es la forma fiable de guardar un archivo desde
-  // una app instalada, y en DuckDuckGo es la única forma de que el archivo conserve su nombre.
-  if ((esIOS || esDuckDuckGo) && navigator.canShare?.({ files: [archivo] })) {
+  // En iPhone, compartir es la forma fiable de guardar un archivo desde una app instalada.
+  if (esIOS && navigator.canShare?.({ files: [archivo] })) {
     try { await navigator.share({ files: [archivo] }); return; } catch (e) { if (e.name === 'AbortError') return; }
   }
   const url = URL.createObjectURL(blob);
