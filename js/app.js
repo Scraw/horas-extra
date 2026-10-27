@@ -262,6 +262,12 @@ function listaCategorias(nombre, sel) {
       <span><b>Grupo ${esc(c.grupo)}:</b> ${esc(c.descripcion)}</span></label>`).join('')}</div>`;
 }
 
+/** Desplegable de categorías (Ajustes), para que ocupe menos que la lista. */
+function selectorCategorias(nombre, sel) {
+  return `<select name="${nombre}">${D.categorias().map((c) => `
+    <option value="${c.id}"${c.id === sel ? ' selected' : ''}>Grupo ${esc(c.grupo)}: ${esc(c.descripcion)}</option>`).join('')}</select>`;
+}
+
 /** Aviso de año pendiente de revisión salarial para un día concreto. */
 function notaPendiente(tabla, festivo) {
   if (tabla.estado !== 'pendiente') return '';
@@ -433,7 +439,7 @@ function vistaAjustes() {
     <h2>Mis datos</h2>
     <div class="campos">
       <p class="nota">Convenio del Metal de la <b>provincia de ${esc(D.NOMBRE_PROVINCIA)}</b>.</p>
-      <fieldset><legend>Categoría profesional</legend>${listaCategorias('aj-categoria', actual)}</fieldset>
+      <label>Categoría profesional${selectorCategorias('aj-categoria', actual)}</label>
       ${tramos}
     </div>
   </section>
@@ -551,6 +557,9 @@ addEventListener('beforeinstallprompt', (e) => {
   if (ui.pestana === 'ajustes' && datos.ajustes) render();
 });
 addEventListener('appinstalled', () => { eventoInstalar = null; aviso('App instalada.'); });
+
+// Safari de iOS ignora user-scalable=no y touch-action para el pellizco: se bloquea el gesto aquí.
+for (const ev of ['gesturestart', 'gesturechange']) document.addEventListener(ev, (e) => e.preventDefault());
 
 // ---------- Arranque ----------
 

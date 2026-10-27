@@ -75,6 +75,13 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.3', '2026-10-27', [
+    ['Cambios', [
+      'Textos 2 px más grandes en toda la app.',
+      'Se anula el zoom de la pantalla, también el del doble toque al pulsar los botones seguidos.',
+      'En Ajustes, la categoría profesional se elige en un desplegable que ocupa menos espacio.',
+    ]],
+  ]],
   ['0.3.2', '2026-10-25', [
     ['Cambios', [
       'El aviso inicial muestra el nombre de la app.',
