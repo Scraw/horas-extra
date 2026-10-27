@@ -262,10 +262,12 @@ function listaCategorias(nombre, sel) {
       <span><b>Grupo ${esc(c.grupo)}:</b> ${esc(c.descripcion)}</span></label>`).join('')}</div>`;
 }
 
-/** Desplegable de categorías (Ajustes), para que ocupe menos que la lista. */
+/** Categoría en Ajustes: plegada muestra la actual; al abrirla, la lista para elegir (se pliega al volver a pintar). */
 function selectorCategorias(nombre, sel) {
-  return `<select name="${nombre}">${D.categorias().map((c) => `
-    <option value="${c.id}"${c.id === sel ? ' selected' : ''}>Grupo ${esc(c.grupo)}: ${esc(c.descripcion)}</option>`).join('')}</select>`;
+  const c = D.categoria(sel);
+  return `<details class="selector-categoria"><summary>Categoría profesional
+      <span class="cat-actual"><b>Grupo ${esc(c.grupo)}:</b> ${esc(c.descripcion)}</span></summary>
+    ${listaCategorias(nombre, sel)}</details>`;
 }
 
 /** Aviso de año pendiente de revisión salarial para un día concreto. */
@@ -439,7 +441,7 @@ function vistaAjustes() {
     <h2>Mis datos</h2>
     <div class="campos">
       <p class="nota">Convenio del Metal de la <b>provincia de ${esc(D.NOMBRE_PROVINCIA)}</b>.</p>
-      <label>Categoría profesional${selectorCategorias('aj-categoria', actual)}</label>
+      ${selectorCategorias('aj-categoria', actual)}
       ${tramos}
     </div>
   </section>

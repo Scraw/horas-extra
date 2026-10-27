@@ -166,7 +166,7 @@ input[type="date"], select {
 }
 .campos { display: grid; gap: 12px; }
 .campos label { display: grid; gap: 4px; font-weight: 600; font-size: calc(0.9rem + 2px); }
-.campos select { font-weight: 400; text-overflow: ellipsis; }
+.campos select { font-weight: 400; }
 
 .resumen { background: var(--superficie-2); border-left: 4px solid var(--acento); }
 .resumen dl { display: grid; grid-template-columns: 1fr auto auto; gap: 4px 16px; margin: 12px 0 0; font-variant-numeric: tabular-nums; }
@@ -219,6 +219,10 @@ details { border-bottom: 1px solid var(--borde); }
 details:last-child { border-bottom: 0; }
 summary { padding: 14px 0; font-weight: 600; cursor: pointer; }
 details[open] { padding-bottom: 12px; }
+.selector-categoria { border-bottom: 0; }
+.selector-categoria summary { padding: 4px 0; }
+.cat-actual { display: block; font-weight: 400; margin-top: 4px; }
+.selector-categoria[open] .cat-actual { display: none; }
 details ul { padding-left: 20px; margin: 4px 0; }
 
 /* Navegación inferior */

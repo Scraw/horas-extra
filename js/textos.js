@@ -75,23 +75,27 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.4', '2026-10-27', [
+    ['Cambios', [
+      'En Ajustes, la lista de categorías se transforma en extensible.',
+    ]],
+  ]],
   ['0.3.3', '2026-10-27', [
     ['Cambios', [
-      'Textos 2 px más grandes en toda la app.',
-      'Se anula el zoom de la pantalla, también el del doble toque al pulsar los botones seguidos.',
-      'En Ajustes, la categoría profesional se elige en un desplegable que ocupa menos espacio.',
+      'Textos más grandes en toda la app.',
+      'Se anula el zoom de la pantalla, también el doble toque en dispositivos iOS que causaba zoom involuntario.',
     ]],
   ]],
   ['0.3.2', '2026-10-25', [
     ['Cambios', [
       'El aviso inicial muestra el nombre de la app.',
-      'El manual indica que es una app de tipo PWA.',
+      'El manual de uso ahora indica el tipo de app.',
     ]],
   ]],
   ['0.3.1', '2026-10-25', [
     ['Cambios', [
-      'Ajuste de textos: aviso legal más breve y con más espacio entre párrafos.',
-      'El aviso se abre desde el principio e indica dónde está el manual de uso.',
+      'Ajuste de textos: aviso legal abreviado.',
+      'El aviso se abre al iniciar la app e indica dónde está el manual de uso.',
       'Lista de categorías más legible, con el grupo en negrita.',
     ]],
   ]],
@@ -99,12 +103,11 @@ export const CAMBIOS = [
     ['Novedades', [
       'Subidas salariales del convenio 2026-2029 (5 %, 3 %, 3 % y 4 %). Las horas de un año sin tabla publicada en el BOP se marcan como pendientes de revisión salarial, con la subida estimada en porcentaje y en euros.',
       'Preparada la revisión salarial por IPC del artículo 39.',
-      'Al cambiar de categoría puedes aplicarla a todo el histórico o a partir de una fecha. El historial se ve en Ajustes.',
+      'Al cambiar de categoría se puede aplicar a todo el histórico o a partir de una fecha. El historial se ve en Ajustes.',
       'Resumen anual en PDF con todas las horas del año y el total de cada nómina.',
-      'Botón «Instalar app» en los navegadores que lo permiten e instrucciones de instalación para más navegadores.',
+      'Botón «Instalar app» en los navegadores que permiten esta opción (Chrome) e instrucciones de instalación para el resto de navegadores.',
     ]],
     ['Cambios', [
-      'El icono se llama ahora «Horas Extra».',
       'Solo se aplica el convenio de la provincia de A Coruña. Se quita la elección de localidad.',
       'Nuevos colores en modo claro y oscuro, y nuevo icono.',
       'Nuevo aviso legal y de exención de responsabilidad.',
