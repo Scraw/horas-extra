@@ -75,6 +75,14 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.5', '2026-10-28', [
+    ['Novedades', [
+      'En Ajustes, nueva opción para borrar todo el registro de horas.',
+    ]],
+    ['Cambios', [
+      'Corregido el botón Aceptar del aviso de error al importar una copia.',
+    ]],
+  ]],
   ['0.3.4', '2026-10-27', [
     ['Cambios', [
       'En Ajustes, la lista de categorías se transforma en extensible.',

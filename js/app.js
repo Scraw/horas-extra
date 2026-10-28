@@ -138,7 +138,7 @@ async function importarCopia(archivo) {
   try {
     nuevos = A.validar(JSON.parse(await archivo.text()));
   } catch (e) {
-    await dialogo({ titulo: 'No se pudo importar', html: `<p>${esc(e instanceof SyntaxError ? 'El archivo está dañado o no es una copia de la app.' : e.message)}</p>`, botones: [{ texto: 'Aceptar', principal: true }] });
+    await dialogo({ titulo: 'No se pudo importar', html: `<p>${esc(e instanceof SyntaxError ? 'El archivo está dañado o no es una copia de la app.' : e.message)}</p>`, botones: [{ texto: 'Aceptar', valor: true, principal: true }] });
     return;
   }
   const n = Object.keys(nuevos.dias).length;
@@ -230,6 +230,26 @@ async function cambiarCategoria(nueva) {
     aviso(r.desde ? `Categoría cambiada desde el ${fmtNum(r.desde)}.` : 'Categoría cambiada para todo el histórico.');
   }
   render();
+}
+
+async function borrarRegistro() {
+  if (!Object.keys(datos.dias).length) return aviso('No hay horas registradas que borrar.');
+  const ok = await dialogo({
+    titulo: '¿Borrar todo el registro?',
+    html: '<p>Se borrará todo el registro de horas extra de este dispositivo. Esta acción no se puede deshacer.</p>' +
+      '<p>Los ajustes y las fechas de cierre de nómina se mantienen. Si quieres conservar las horas, exporta antes una copia.</p>' +
+      '<p>¿Seguro que quieres continuar?</p>',
+    botones: [{ texto: 'Cancelar', valor: false }, { texto: 'Continuar', valor: true, principal: true }],
+  });
+  if (!ok) return;
+  datos.dias = {};
+  persistir();
+  render();
+  await dialogo({
+    titulo: 'Registro borrado',
+    html: '<p>Se han borrado todos los datos del registro de horas.</p>',
+    botones: [{ texto: 'Aceptar', valor: true, principal: true }],
+  });
 }
 
 async function borrarTramo(desde) {
@@ -483,6 +503,10 @@ function vistaAjustes() {
     <details><summary>Licencia MIT</summary>
       <div class="licencia" lang="en">${LICENCIA.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
     </details>
+    <details><summary>Borrar registro</summary>
+      <p class="nota">Borra todas las horas guardadas en este dispositivo. Los ajustes y las fechas de cierre se mantienen.</p>
+      <button class="boton ancho" data-accion="borrar-registro">Borrar todo el registro de horas</button>
+    </details>
   </section>
 
   <section class="tarjeta">
@@ -524,6 +548,7 @@ document.addEventListener('click', (e) => {
     case 'pdf-anual': descargarPDF(D.periodoAnual(+b.dataset.anio), 'anual'); break;
     case 'borrar-cierre': borrarCierre(b.dataset.fecha); break;
     case 'borrar-tramo': borrarTramo(b.dataset.desde); break;
+    case 'borrar-registro': borrarRegistro(); break;
     case 'exportar': exportarCopia(); break;
     case 'importar': $('#archivo-copia').click(); break;
     case 'instalar': instalar(); break;
