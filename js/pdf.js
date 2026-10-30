@@ -153,7 +153,7 @@ export async function generarPDF({ tipo = 'nomina', registros, periodo, historia
 
   let y = doc.lastAutoTable.finalY + 6;
   doc.setFontSize(8.5).setTextColor(70);
-  const notas = ['Tarifa = retribución total anual ÷ jornada anual × 1,60 (laborable) o × 1,75 (domingo o festivo).'];
+  const notas = ['Tarifa = retribución total anual ÷ jornada anual × 1,60 (laborable) o × 1,75 (domingo o festivo), redondeada a dos decimales.'];
   if (anual) notas.push(`Cada nómina incluye los días desde el siguiente al cierre de la nómina anterior hasta su propio cierre. Si una nómina empieza en ${+anio - 1} o termina en ${+anio + 1}, aquí solo se suman sus días de ${anio}.`);
   if (totales.horasPendientes > 0) {
     const anios = totales.aniosPendientes

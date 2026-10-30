@@ -22,7 +22,7 @@ Funciona en el móvil (Android e iPhone) como una app más, **sin conexión** y 
 
 ## 🧮 Cómo calcula
 
-- **Valor de la hora extra** = retribución total anual de tu categoría ÷ horas de jornada anual × **1,60** (laborable) o × **1,75** (domingo o festivo).
+- **Valor de la hora extra** = retribución total anual de tu categoría ÷ horas de jornada anual × **1,60** (laborable) o × **1,75** (domingo o festivo), redondeado a dos decimales.
 - Cada día se calcula con la categoría que tenías ese día y con la tabla salarial y la jornada del año en que lo trabajaste.
 - **Subidas del convenio:** 5 % (2026), 3 % (2027), 3 % (2028) y 4 % (2029). Mientras no se publique en el BOP la tabla de un año nuevo, sus horas aparecen como **pendientes de revisión salarial** y se calculan con la subida pactada. La app indica el porcentaje y cuántos euros supone.
 - **Nóminas:** cada nómina va del día siguiente al cierre anterior hasta su propia fecha de cierre (por ejemplo, del 14 de septiembre al 13 de octubre).

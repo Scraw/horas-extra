@@ -1,7 +1,7 @@
 // Formato de números y fechas en español de España.
 
 const euros = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
-const tarifa = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+const tarifa = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const horas = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 1 });
 
 const fecha = (opciones) => new Intl.DateTimeFormat('es-ES', { timeZone: 'UTC', ...opciones });

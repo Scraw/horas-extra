@@ -110,9 +110,17 @@ export function horasAnuales(anio) {
   return HORAS_ANUALES[anio < Math.min(...anios) ? Math.min(...anios) : Math.max(...anios)];
 }
 
-/** Valor de la hora extra: R.T.A. / H x coeficiente. Sin redondear. `total` permite valorar con otra R.T.A. */
+/** Redondea a céntimos (la mitad hacia arriba), corrigiendo el error de coma flotante (p. ej. 1,005 → 1,01). */
+export function aCentimos(n) {
+  return Math.round(Number((n * 100).toPrecision(15))) / 100;
+}
+
+/**
+ * Valor de la hora extra: R.T.A. / H x coeficiente, redondeado a 2 decimales antes de multiplicarlo por las horas.
+ * `total` permite valorar con otra R.T.A.
+ */
 export function valorHora(tabla, anio, festivo, total = tabla.total) {
-  return (total / horasAnuales(anio)) * (festivo ? COEF_FESTIVO : COEF_LABORABLE);
+  return aCentimos((total / horasAnuales(anio)) * (festivo ? COEF_FESTIVO : COEF_LABORABLE));
 }
 
 // ---- Fechas ----
@@ -188,7 +196,7 @@ export function contiene(periodo, fecha) {
 /**
  * Desglose de un periodo. Cada día se valora con la categoría que tenía el usuario ese día y con la tabla y la
  * jornada anual del año en que se trabajó. En los años pendientes de revisión salarial, `subidaEstimada` es lo que
- * aporta la subida pactada frente a la tabla del año anterior. Los importes no se redondean.
+ * aporta la subida pactada frente a la tabla del año anterior. La tarifa va redondeada a céntimos; los importes no.
  */
 export function desglose(registros, periodo, historial) {
   const lineas = [];

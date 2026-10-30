@@ -56,7 +56,7 @@ y abre `http://localhost:3000`. Para probarla como en Cloudflare: `npx wrangler 
 ## Reglas de cálculo
 
 - Solo se aplica el convenio de la provincia de A Coruña.
-- Valor hora extra = retribución total anual ÷ horas anuales × 1,60 (laborable) o × 1,75 (domingo o festivo marcado).
+- Valor hora extra = retribución total anual ÷ horas anuales × 1,60 (laborable) o × 1,75 (domingo o festivo marcado), redondeado a 2 decimales antes de multiplicar por las horas.
 - Horas anuales: 1752 (2026), 1744 (2027 y 2028), 1740 (2029). Cada día usa la tabla y la jornada del año en que se trabajó,
   y la categoría que tenía el usuario ese día (la categoría puede cambiar para todo el histórico o desde una fecha).
 - Subidas pactadas (art. 38): 5 % (2026, ya incluida en la tabla 2026), 3 % (2027), 3 % (2028) y 4 % (2029), encadenadas.

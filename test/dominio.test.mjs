@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  tablaPara, valorHora, periodoDe, desglose, diaSemana, sumarDias, categoriaEn, cambiarCategoria, INCREMENTOS,
+  tablaPara, valorHora, aCentimos, periodoDe, desglose, diaSemana, sumarDias, categoriaEn, cambiarCategoria, INCREMENTOS,
   aniosConHoras,
 } from '../js/dominio.js';
 
@@ -10,11 +10,18 @@ const cerca = (a, b) => assert.ok(Math.abs(a - b) < 1e-9, `${a} != ${b}`);
 const G7 = 25521.62;
 const siempre = (categoria) => [{ desde: null, categoria }];
 
-test('valor hora peón 2026 (tabla publicada)', () => {
+test('valor hora peón 2026 (tabla publicada), redondeado a céntimos', () => {
   const t = tablaPara('G7', 2026);
   assert.equal(t.estado, 'publicada');
-  cerca(valorHora(t, 2026, false), (G7 / 1752) * 1.6);
-  cerca(valorHora(t, 2026, true), (G7 / 1752) * 1.75);
+  assert.equal(valorHora(t, 2026, false), 23.31); // 23,3074…
+  assert.equal(valorHora(t, 2026, true), 25.49); // 25,4924…
+});
+
+test('redondeo a céntimos: la mitad sube y sin errores de coma flotante', () => {
+  assert.equal(aCentimos(1.005), 1.01);
+  assert.equal(aCentimos(23.305), 23.31);
+  assert.equal(aCentimos(23.3049), 23.3);
+  assert.equal(aCentimos(25.4925), 25.49);
 });
 
 test('2027-2029 pendientes con subidas pactadas encadenadas y su jornada', () => {
@@ -23,7 +30,7 @@ test('2027-2029 pendientes con subidas pactadas encadenadas y su jornada', () =>
   assert.equal(t27.incremento, 3);
   cerca(t27.total, G7 * 1.03);
   cerca(t27.totalAnterior, G7);
-  cerca(valorHora(t27, 2027, false), ((G7 * 1.03) / 1744) * 1.6);
+  assert.equal(valorHora(t27, 2027, false), aCentimos(((G7 * 1.03) / 1744) * 1.6));
   cerca(tablaPara('G7', 2028).total, G7 * 1.03 * 1.03);
   cerca(tablaPara('G7', 2029).total, G7 * 1.03 * 1.03 * 1.04);
   cerca(tablaPara('G7', 2031).total, G7 * 1.03 * 1.03 * 1.04); // sin convenio: sin más subidas
@@ -83,7 +90,8 @@ test('desglose: domingo festivo, cambio de categoría y año pendiente', () => {
   assert.equal(totales.horasLaborables, 1);
   assert.equal(totales.horasFestivas, 2.5);
   assert.equal(totales.horasPendientes, 0);
-  cerca(totales.importeTotal, (G7 / 1752) * (1.6 + 2.5 * 1.75));
+  assert.deepEqual(lineas.map((l) => l.tarifa), [25.49, 23.31, 25.49]);
+  cerca(totales.importeTotal, 23.31 + 2.5 * 25.49); // tarifa redondeada antes de multiplicar por las horas
 
   const h = [{ desde: null, categoria: 'G7' }, { desde: '2026-10-16', categoria: 'G1' }];
   const d2 = desglose(regs, { inicio: '2026-09-14', fin: '2026-10-18' }, h);
@@ -92,7 +100,7 @@ test('desglose: domingo festivo, cambio de categoría y año pendiente', () => {
 
   const d3 = desglose([{ fecha: '2027-01-04', medias: 2, festivo: false }], { inicio: null, fin: null }, siempre('G7'));
   assert.equal(d3.totales.horasPendientes, 1);
-  cerca(d3.totales.subidaEstimada, ((G7 * 0.03) / 1744) * 1.6);
+  cerca(d3.totales.subidaEstimada, 24.12 - 23.41); // diferencia entre tarifas ya redondeadas
   assert.deepEqual(d3.totales.aniosPendientes, [{ anio: 2027, incremento: 3 }]);
   assert.deepEqual(aniosConHoras([...regs, { fecha: '2027-01-04', medias: 2 }]), [2027, 2026]);
 });

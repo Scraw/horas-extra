@@ -30,7 +30,7 @@ export const MANUAL = [
     'Marca <b>Festivo</b> si ese día es festivo nacional, autonómico o local. Los domingos cuentan siempre como festivo.',
   ]],
   ['Cómo se calcula', [
-    'Valor de la hora extra = retribución total anual de tu categoría ÷ horas de jornada anual × 1,60 (laborable) o × 1,75 (domingo o festivo).',
+    'Valor de la hora extra = retribución total anual de tu categoría ÷ horas de jornada anual × 1,60 (laborable) o × 1,75 (domingo o festivo), redondeado a dos decimales.',
     'Cada día se valora con la categoría que tenías ese día y con la tabla y la jornada del año en que se trabajó.',
   ]],
   ['Subidas salariales y revisión', [
@@ -75,6 +75,11 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.6', '2026-10-30', [
+    ['Cambios', [
+      'La fórmula de cálculo H.E. se redondea a dos decimales.',
+    ]],
+  ]],
   ['0.3.5', '2026-10-28', [
     ['Novedades', [
       'En Ajustes, nueva opción para borrar todo el registro de horas.',
