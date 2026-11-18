@@ -28,6 +28,7 @@ export const MANUAL = [
   ['Apuntar horas', [
     'En <b>Registro</b> elige el día con las flechas o tocando la fecha, y usa <b>+ ½ h</b> y <b>− ½ h</b>. Se guarda solo.',
     'Marca <b>Festivo</b> si ese día es festivo nacional, autonómico o local. Los domingos cuentan siempre como festivo.',
+    'En <b>Trabajo realizado</b> puedes anotar, si quieres, qué hiciste ese día. Se guarda solo mientras escribes y va incluido en la copia de seguridad.',
   ]],
   ['Cómo se calcula', [
     'Valor de la hora extra = retribución total anual de tu categoría ÷ horas de jornada anual × 1,60 (laborable) o × 1,75 (domingo o festivo), redondeado a dos decimales.',
@@ -75,6 +76,14 @@ export const MANUAL = [
 
 // Notas de cada versión, la más reciente primero: [versión, fecha, [[sección, [cambios]], ...]].
 export const CAMBIOS = [
+  ['0.3.7', '2026-11-18', [
+    ['Novedades', [
+      'En Registro, campo de texto opcional para anotaciones. Se guarda en la copia de seguridad.',
+    ]],
+    ['Cambios', [
+      'Ajuste de formato de fecha. Se añade número de semana.',
+    ]],
+  ]],
   ['0.3.6', '2026-10-30', [
     ['Cambios', [
       'La fórmula de cálculo H.E. se redondea a dos decimales.',

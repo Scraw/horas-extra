@@ -104,3 +104,35 @@ test('desglose: domingo festivo, cambio de categoría y año pendiente', () => {
   assert.deepEqual(d3.totales.aniosPendientes, [{ anio: 2027, incremento: 3 }]);
   assert.deepEqual(aniosConHoras([...regs, { fecha: '2027-01-04', medias: 2 }]), [2027, 2026]);
 });
+
+test('semana del año: ISO 8601 y semana completa', async () => {
+  const { semanaDelAnio } = await import('../js/dominio.js');
+  const casos = [
+    // fecha, ISO, completa
+    ['2026-11-06', 45, 44], ['2026-11-09', 46, 45], ['2026-01-01', 1, 52], ['2026-01-05', 2, 1],
+    ['2025-12-29', 1, 52], ['2026-12-31', 53, 52], ['2027-01-01', 53, 52], ['2027-01-04', 1, 1], ['2021-01-03', 53, 52],
+  ];
+  for (const [f, iso, completa] of casos) {
+    assert.equal(semanaDelAnio(f, 'iso'), iso, `${f} iso`);
+    assert.equal(semanaDelAnio(f, 'completa'), completa, `${f} completa`);
+  }
+});
+
+test('copias: las antiguas sin nota se importan y la nota se conserva', async () => {
+  const { validar, FORMATO } = await import('../js/almacen.js');
+  const antigua = validar({ formato: 2, ajustes: { categorias: [{ desde: null, categoria: 'G7' }] },
+    dias: { '2026-11-06': { medias: 3, festivo: false } }, cierres: [] });
+  assert.deepEqual(antigua.dias, { '2026-11-06': { medias: 3, festivo: false } });
+  const nueva = validar({ formato: FORMATO, dias: {
+    '2026-11-06': { medias: 3, festivo: false, nota: '  Montaje de tuberías  ' },
+    '2026-11-07': { medias: 0, festivo: false, nota: 'Solo nota' },
+    '2026-11-08': { medias: 0, festivo: false, nota: '   ' },
+    '2026-11-09': { medias: 2, festivo: false, nota: 42 },
+  }, cierres: [] });
+  assert.deepEqual(nueva.dias, {
+    '2026-11-06': { medias: 3, festivo: false, nota: 'Montaje de tuberías' },
+    '2026-11-07': { medias: 0, festivo: false, nota: 'Solo nota' },
+    '2026-11-09': { medias: 2, festivo: false },
+  });
+  assert.throws(() => validar({ formato: FORMATO + 1, dias: {}, cierres: [] }));
+});

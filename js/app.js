@@ -157,11 +157,12 @@ async function importarCopia(archivo) {
 
 // ---------- Acciones ----------
 
-function cambiarDia(fecha, medias, festivo) {
-  if (medias <= 0 && !festivo) delete datos.dias[fecha];
-  else datos.dias[fecha] = { medias: Math.max(0, Math.min(48, medias)), festivo };
+function cambiarDia(fecha, medias, festivo, nota = datos.dias[fecha]?.nota, repintar = true) {
+  nota = A.limpiarNota(nota);
+  if (medias <= 0 && !festivo && !nota) delete datos.dias[fecha];
+  else datos.dias[fecha] = { medias: Math.max(0, Math.min(48, medias)), festivo, ...(nota && { nota }) };
   persistir();
-  render();
+  if (repintar) render();
 }
 
 async function anadirCierre(fecha) {
@@ -233,10 +234,10 @@ async function cambiarCategoria(nueva) {
 }
 
 async function borrarRegistro() {
-  if (!Object.keys(datos.dias).length) return aviso('No hay horas registradas que borrar.');
+  if (!Object.keys(datos.dias).length) return aviso('No hay horas ni notas registradas que borrar.');
   const ok = await dialogo({
     titulo: '¿Borrar todo el registro?',
-    html: '<p>Se borrará todo el registro de horas extra de este dispositivo. Esta acción no se puede deshacer.</p>' +
+    html: '<p>Se borrará todo el registro de horas extra de este dispositivo, también las notas de cada día. Esta acción no se puede deshacer.</p>' +
       '<p>Los ajustes y las fechas de cierre de nómina se mantienen. Si quieres conservar las horas, exporta antes una copia.</p>' +
       '<p>¿Seguro que quieres continuar?</p>',
     botones: [{ texto: 'Cancelar', valor: false }, { texto: 'Continuar', valor: true, principal: true }],
@@ -347,7 +348,8 @@ function vistaRegistro() {
       <input type="date" id="fecha" value="${fecha}" aria-label="Fecha" required>
       <button class="icono" data-accion="dia-siguiente" aria-label="Día siguiente">›</button>
     </div>
-    <p class="fecha-larga">${esc(fmtLarga(fecha))}${fecha === hoy ? ' · hoy' : ` · <button class="enlace" data-accion="hoy">ir a hoy</button>`}</p>
+    <p class="fecha-larga"><span class="fecha-completa">${esc(fmtLarga(fecha))}</span>
+      Semana ${D.semanaDelAnio(fecha)}${fecha === hoy ? ' · hoy' : ` · <button class="enlace" data-accion="hoy">ir a hoy</button>`}</p>
     <div class="contador">
       <button class="boton tonal" data-accion="menos" ${reg.medias <= 0 ? 'disabled' : ''}>− ½ h</button>
       <output>${fmtHoras(reg.medias / 2)}</output>
@@ -359,6 +361,10 @@ function vistaRegistro() {
     </label>
     ${tabla ? `<p class="nota">Grupo ${esc(cat.grupo)} · hora extra: ${fmtTarifa(D.valorHora(tabla, D.anioDe(fecha), false))} laborable · ${fmtTarifa(D.valorHora(tabla, D.anioDe(fecha), true))} festivo</p>` : ''}
     ${tabla ? notaPendiente(tabla, reg.festivo || domingo) : ''}
+    <label class="campo-nota">
+      <span>Trabajo realizado <span class="nota">(opcional)</span></span>
+      <textarea id="nota-dia" rows="3" maxlength="${A.MAX_NOTA}" placeholder="Qué hiciste este día">${esc(reg.nota ?? '')}</textarea>
+    </label>
   </section>
 
   <section class="tarjeta resumen">
@@ -504,7 +510,7 @@ function vistaAjustes() {
       <div class="licencia" lang="en">${LICENCIA.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
     </details>
     <details><summary>Borrar registro</summary>
-      <p class="nota">Borra todas las horas guardadas en este dispositivo. Los ajustes y las fechas de cierre se mantienen.</p>
+      <p class="nota">Borra todas las horas y notas guardadas en este dispositivo. Los ajustes y las fechas de cierre se mantienen.</p>
       <button class="boton ancho" data-accion="borrar-registro">Borrar todo el registro de horas</button>
     </details>
   </section>
@@ -563,6 +569,13 @@ document.addEventListener('change', (e) => {
   else if (t.name === 'aj-categoria') cambiarCategoria(t.value);
   else if (t.name === 'tema') { datos.tema = t.value; persistir(); aplicarTema(); }
   else if (t.id === 'archivo-copia' && t.files[0]) { importarCopia(t.files[0]); t.value = ''; }
+});
+
+// La nota del día se guarda mientras se escribe, sin repintar para no perder el foco.
+document.addEventListener('input', (e) => {
+  if (e.target.id !== 'nota-dia') return;
+  const r = datos.dias[ui.fecha] ?? { medias: 0, festivo: false };
+  cambiarDia(ui.fecha, r.medias, r.festivo, e.target.value, false);
 });
 
 document.addEventListener('submit', (e) => {

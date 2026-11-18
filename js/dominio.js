@@ -141,6 +141,30 @@ export function anioDe(fecha) {
   return +fecha.slice(0, 4);
 }
 
+/** Día de la semana con el lunes como primero: 1 = lunes ... 7 = domingo. */
+const diaISO = (fecha) => diaSemana(fecha) || 7;
+const diasEntre = (a, b) => Math.round((aUTC(b) - aUTC(a)) / 86400000);
+
+/**
+ * Número de semana del año, con semanas de lunes a domingo.
+ * 'iso' (ISO 8601, la de los calendarios en España): la semana 1 es la que contiene el primer jueves del año.
+ * 'completa': la semana 1 es la primera cuyos siete días ya están en el año nuevo; los días anteriores de enero
+ * pertenecen a la última semana del año anterior.
+ */
+export const REGLA_SEMANA = 'iso';
+
+export function semanaDelAnio(fecha, regla = REGLA_SEMANA) {
+  const lunes = sumarDias(fecha, 1 - diaISO(fecha));
+  if (regla === 'iso') {
+    const jueves = sumarDias(lunes, 3);
+    return Math.floor(diasEntre(`${anioDe(jueves)}-01-01`, jueves) / 7) + 1;
+  }
+  const primerLunes = (anio) => sumarDias(`${anio}-01-01`, (8 - diaISO(`${anio}-01-01`)) % 7);
+  let inicio = primerLunes(anioDe(lunes));
+  if (lunes < inicio) inicio = primerLunes(anioDe(lunes) - 1);
+  return diasEntre(inicio, lunes) / 7 + 1;
+}
+
 export function hoyLocal(ahora = new Date()) {
   const p = (n) => String(n).padStart(2, '0');
   return `${ahora.getFullYear()}-${p(ahora.getMonth() + 1)}-${p(ahora.getDate())}`;

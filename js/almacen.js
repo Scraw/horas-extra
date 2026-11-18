@@ -2,13 +2,15 @@
 
 const CLAVE = 'rhe-datos';
 const CLAVE_AVISO = 'rhe-aviso-version';
-export const FORMATO = 2;
+// 3 (v0.3.7): los días pueden llevar una nota. Las copias de formato 1 y 2 se siguen importando.
+export const FORMATO = 3;
+export const MAX_NOTA = 2000;
 
 const vacio = () => ({
   formato: FORMATO,
   ajustes: null, // { categorias: [{ desde: 'AAAA-MM-DD' | null, categoria }] }, ver categoriaEn() en dominio.js
   tema: 'auto', // 'auto' | 'claro' | 'oscuro'
-  dias: {}, // { 'AAAA-MM-DD': { medias, festivo } }
+  dias: {}, // { 'AAAA-MM-DD': { medias, festivo, nota? } }, nota opcional: el trabajo hecho ese día
   cierres: [], // ['AAAA-MM-DD'], último día que entra en cada nómina
   ultimaCopia: null, // fecha ISO de la última copia exportada
 });
@@ -52,6 +54,11 @@ export async function pedirPersistencia() {
 
 const FECHA = /^\d{4}-\d{2}-\d{2}$/;
 
+/** Nota de un día: texto sin espacios sobrantes al principio ni al final, o '' si no hay. */
+export function limpiarNota(nota) {
+  return typeof nota === 'string' ? nota.trim().slice(0, MAX_NOTA) : '';
+}
+
 /** Comprueba y normaliza un objeto de datos (también el de una copia importada). Lanza Error si no es válido. */
 export function validar(obj) {
   if (!obj || typeof obj !== 'object' || typeof obj.dias !== 'object' || !Array.isArray(obj.cierres)) {
@@ -78,7 +85,8 @@ export function validar(obj) {
   for (const [fecha, d] of Object.entries(obj.dias)) {
     if (!FECHA.test(fecha) || !d) continue;
     const medias = Math.max(0, Math.min(48, Math.round(Number(d.medias) || 0)));
-    if (medias > 0 || d.festivo) datos.dias[fecha] = { medias, festivo: !!d.festivo };
+    const nota = limpiarNota(d.nota);
+    if (medias > 0 || d.festivo || nota) datos.dias[fecha] = { medias, festivo: !!d.festivo, ...(nota && { nota }) };
   }
   datos.cierres = [...new Set(obj.cierres.filter((c) => typeof c === 'string' && FECHA.test(c)))].sort();
   if (typeof obj.ultimaCopia === 'string') datos.ultimaCopia = obj.ultimaCopia;
